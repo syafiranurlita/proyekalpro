@@ -17,3 +17,8 @@ Pada komputer, cukup  gunakan 4 panah keyboard ( atas, bawah, kiri, kanan).
   Sebelum memulai game, kita memasukkan username kita dan saat game mulai maka akan ada time yang menghitung berapa lama kita bermain dan score setiap kita berhasil menjumlahkan nilai yang ada di kotak.Kita bisa keluar game dengan mengklik escape dan akan ada pilihan untuk save game atau exit.
 
   Apabila kita save program , dan keluar game, lalu kita masuk game lg dan memasukkan username maka kita akan resume atau balik ke game kita dengan time yang sudah tercatat dan score serta state kita terakhir kita bermain. Data pemain dan waktu serta time dan state akan ada pada file excel.
+
+
+                                              Cara Bermain Game 
+                                              
+   
