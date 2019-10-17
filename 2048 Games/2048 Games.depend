@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1571075904 source:u:\semester 5\alprog\proyek\2048 games\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+	<conio.h>
+	<math.h>
+	<time.h>
+	<string.h>
+

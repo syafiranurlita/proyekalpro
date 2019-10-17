@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="2048 Games" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/2048 Games" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-std=c99" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/2048 Games" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/app.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/chart.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/chartsheet.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/common.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/content_types.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/core.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/custom.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/drawing.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/format.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/hash_table.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/packager.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/relationships.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/shared_strings.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/styles.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/theme.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/utility.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/workbook.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/worksheet.h" />
+		<Unit filename="../../libxlsxwriter-master/libxlsxwriter-master/include/xlsxwriter/xmlwriter.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
