@@ -1,8 +1,8 @@
-proyek algoritma dan Pemograman
-Nama : Syafira Nurlita	1706022981		
-       Syahrul Hidayat	1706037062		
-Kelompok 13 
-Judul proyek : Game 2048
+  proyek algoritma dan Pemograman
+                                                 Nama : Syafira Nurlita	1706022981		
+                                                        Syahrul Hidayat	1706037062		
+                                                         Kelompok 13 
+                                                 Judul proyek : Game 2048
 
 
                                                 Penjelasan tentang Game 2048 
