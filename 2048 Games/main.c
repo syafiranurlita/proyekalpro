@@ -53,17 +53,20 @@ int clock_game_start = 0;
 int clock_game_refresh = 0;
 
 //USER DATA
-char user_name[16];
-int  user_name_count = 0;
+struct user_data{
+    char name[16];
+    int  name_count;
 
-int  user_time = 0;
-int  user_time_count = 0;
+    int  time;
+    int  time_count;
 
-int  user_score[20];
-int  user_score_highest = 0;
+    int  score[20];
+    int  score_highest;
 
-char user_time_stamp[24];
-int  user_time_stamp_count = 0;
+    char time_stamp[24];
+    int  time_stamp_count;
+} user;
+
 
 char coloumn_arr[1000];
 int coloumn_size = 0;
@@ -90,39 +93,39 @@ void WelcomeActivity(){
     printCenter("SELAMAT DATANG DI GAME 2048", 27);
     printCenter("Enter untuk login", 17);
     printf("\n\n");
-    printBorderForm("USER NAME", 9, user_name, user_name_count);
+    printBorderForm("USER NAME", 9, user.name, user.name_count);
 
-    gotoxy(SCREEN_WIDHT/2 + user_name_count/2, 7);
+    gotoxy(SCREEN_WIDHT/2 + user.name_count/2, 7);
 
     while (1){
         if (kbhit()){
             char c = getch();
             if (c == KEY_BACKSPACE){
-                if (user_name_count <= 0)
+                if (user.name_count <= 0)
                     continue;
 
                 printf("%c", c);
                 printf(" ");
                 printf("%c", c);
 
-                user_name[user_name_count] = 0;
-                user_name_count--;
+                user.name[user.name_count] = 0;
+                user.name_count--;
             } else if (c == KEY_ENTER){
-                if (user_name_count > 3)
+                if (user.name_count > 3)
                     break;
             } else if (c != ' '){
-                if (user_name_count >= 15)
+                if (user.name_count >= 15)
                     continue;
                 //username
-                user_name[user_name_count] = c;
-                user_name_count++;
+                user.name[user.name_count] = c;
+                user.name_count++;
             } else {
                 continue;
             }
 
             gotoxy(0, 6);
-            printBorderForm("USER NAME", 9, user_name, user_name_count);
-            gotoxy(SCREEN_WIDHT/2 + user_name_count/2, 7);
+            printBorderForm("USER NAME", 9, user.name, user.name_count);
+            gotoxy(SCREEN_WIDHT/2 + user.name_count/2, 7);
         }
     }
 
@@ -141,19 +144,19 @@ void MenuGameActivity(int selection){
     printf("\n");
 
     char buffer[50];
-    sprintf(buffer, "Hi %s, welcome to", user_name);
-    printCenter(buffer, 15 + user_name_count);
+    sprintf(buffer, "Hi %s, welcome to", user.name);
+    printCenter(buffer, 15 + user.name_count);
 
     printCenter("2048 GAME", 9);
     printf("\n");
 
     buffer[50];
-    sprintf(buffer, "Your high score : %6d", user_score_highest);
+    sprintf(buffer, "Your high score : %6d", user.score_highest);
     printCenter(buffer, 15 + 11);
 
     buffer[50];
-    sprintf(buffer, "Last Attempt : %s", user_time_stamp);
-    printCenter(buffer, 15 + user_time_stamp_count);
+    sprintf(buffer, "Last Attempt : %s", user.time_stamp);
+    printCenter(buffer, 15 + user.time_stamp_count);
     printf("\n\n");
 
     printMenu(selection);
@@ -349,14 +352,14 @@ void MainGameActivity(){
 
     printf(ANSI_COLOR_RESET);
     printf("\n\n");
-    printBorderForm("USERNAME", 8, user_name, user_name_count);
+    printBorderForm("USERNAME", 8, user.name, user.name_count);
 
-    if (user_time == 0){
+    if (user.time == 0){
         //RESET ALL DATAS
         clock_game_start = clock();
         clock_game_refresh = clock();
         for (i = 0; i < 20; i++){
-            user_score[i] = 0;
+            user.score[i] = 0;
             int x;
             for (x = 0; x < 4; x++){
             	int y;
@@ -377,8 +380,8 @@ void MainGameActivity(){
         undo_available = 0;
     } else {
         //RESET ALL DATAS
-        clock_game_start =  clock() - user_time * 1000;
-        clock_game_refresh =  clock() - user_time * 1000;
+        clock_game_start =  clock() - user.time * 1000;
+        clock_game_refresh =  clock() - user.time * 1000;
         for (i = 0; i < 20; i++){
             if (i <=3 )
                 is_move_fail[i] = 0;
@@ -470,10 +473,10 @@ void MainGameActivity(){
 
     if (is_save){
         //jangan hitung nilai akhir, simpan saja
-        saveGame(user_score[cells_size - 1], (clock() - clock_game_start)/1000, 1);
+        saveGame(user.score[cells_size - 1], (clock() - clock_game_start)/1000, 1);
     } else {
         //hitung nilai akhir
-        saveGame(user_score[cells_size - 1], (clock() - clock_game_start)/1000, 0);
+        saveGame(user.score[cells_size - 1], (clock() - clock_game_start)/1000, 0);
     }
     loadGame();
     MenuGameActivity(0);
@@ -509,7 +512,7 @@ void loadGame(){
                 if(isFound == 0){
                     isFound = 1;
                     for(i = 0; i < words_count; i++){
-                        if(words_char[i] != user_name[i]){
+                        if(words_char[i] != user.name[i]){
                             isFound = 0;
                             break;
                         }
@@ -519,18 +522,18 @@ void loadGame(){
                 //LAST ATTEMPT
                 if(isFound == 1){
                     for(int i = 0; i < words_count; i++){
-                        user_time_stamp[i] = words_char[i];
+                        user.time_stamp[i] = words_char[i];
                     }
-                    user_time_stamp_count = words_count;
+                    user.time_stamp_count = words_count;
                 }
             } else if (column == 2){
                 //HIGH SCORE
                 if(isFound == 1){
-					user_score_highest = 0;
+					user.score_highest = 0;
                     for(int i = 0; i < words_count; i++){
                         if (words_char[i] == '\n')
                             continue;
-                        user_score_highest = user_score_highest + (words_char[i] - '0') * pow(10, words_count - i - 1);
+                        user.score_highest = user.score_highest + (words_char[i] - '0') * pow(10, words_count - i - 1);
                     }
                 }
             } else if (column == 3){
@@ -545,9 +548,9 @@ void loadGame(){
                             continue;
                         sc = sc + (words_char[i] - '0') * pow(10, words_count - i - 1);
                     }
-                    user_score[cells_size - 1] = sc;
-                    user_score[cells_size - 2] = sc;
-                    user_score[cells_size - 3] = sc;
+                    user.score[cells_size - 1] = sc;
+                    user.score[cells_size - 2] = sc;
+                    user.score[cells_size - 3] = sc;
                 }
             } else if (column == 5){
                 //CURRENT TIME
@@ -558,7 +561,7 @@ void loadGame(){
                             continue;
                         sc = sc + (words_char[i] - '0') * pow(10, words_count - i - 1);
                     }
-                    user_time = sc;
+                    user.time = sc;
                 }
             }
 
@@ -621,37 +624,26 @@ void loadGame(){
     }
     fclose (fptr);
 
-
-    printf("\n");
-    printf("CURRENT SCORE : %d\n", user_score[cells_size - 1]);
-    printf("CURRENT TIME : %d\n", user_time);
-    for (int x = 0; x < 4; x++){
-        for (int y = 0; y < 4; y++){
-            printf("%4d", cells[cells_size - 1][x][y]);
-        }
-        printf("\n");
-    }
-
     if(isFound){
 
         return;
         printf("DITEMUKAN!\n");
-        printf("User name : %s\n", user_name);
-        printf("Last Attempt : %s\n", user_time_stamp);
-        printf("Score : %d\n", user_score_highest);
+        printf("User name : %s\n", user.name);
+        printf("Last Attempt : %s\n", user.time_stamp);
+        printf("Score : %d\n", user.score_highest);
 
         printf(" =============== UPDATED! ===============");
     } else {
-        user_score_highest = 0;
+        user.score_highest = 0;
         time_t t = time(NULL);
         struct tm tm = *localtime(&t);
-        sprintf(user_time_stamp, "%02d:%02d:%02d %02d-%02d-%02d", tm.tm_hour, tm.tm_min, tm.tm_sec, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
-        user_time_stamp_count = 19;
+        sprintf(user.time_stamp, "%02d:%02d:%02d %02d-%02d-%02d", tm.tm_hour, tm.tm_min, tm.tm_sec, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+        user.time_stamp_count = 19;
 
         return;
-        printf("User name : %s\n", user_name);
-        printf("Last Attempt : %s\n", user_time_stamp);
-        printf("Score : %d\n", user_score_highest);
+        printf("User name : %s\n", user.name);
+        printf("Last Attempt : %s\n", user.time_stamp);
+        printf("Score : %d\n", user.score_highest);
         printf("Data tidak ditemukan!");
     }
 }
@@ -684,7 +676,7 @@ void saveGame(int sc, int tm, int is_save_only){
                 for(int i = 0; i < words_count; i++){
                     teks[count] = words_char[i];
                     count++;
-                    if(words_char[i] != user_name[i]){
+                    if(words_char[i] != user.name[i]){
                         if (isCreated == 0)
                             isFound = 0;
                     }
@@ -696,10 +688,10 @@ void saveGame(int sc, int tm, int is_save_only){
                 if(isFound == 1 && isCreated == 0){
                     time_t t = time(NULL);
                     struct tm tm = *localtime(&t);
-                    sprintf(user_time_stamp, "%02d:%02d:%02d %02d-%02d-%02d", tm.tm_hour, tm.tm_min, tm.tm_sec, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
-                    user_time_stamp_count = 19;
-                    for(int i = 0; i < user_time_stamp_count; i++){
-                        teks[count] = user_time_stamp[i];
+                    sprintf(user.time_stamp, "%02d:%02d:%02d %02d-%02d-%02d", tm.tm_hour, tm.tm_min, tm.tm_sec, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+                    user.time_stamp_count = 19;
+                    for(int i = 0; i < user.time_stamp_count; i++){
+                        teks[count] = user.time_stamp[i];
                         count++;
                     }
                 } else {
@@ -713,8 +705,8 @@ void saveGame(int sc, int tm, int is_save_only){
             } else if(column == 2){
                 //HIGH SCORE
                 if(isFound == 1 && isCreated == 0){
-                    int val = user_score_highest;
-                    if (sc > user_score_highest){
+                    int val = user.score_highest;
+                    if (sc > user.score_highest){
                         val = sc;
                     }
                     char buff[10];
@@ -736,8 +728,8 @@ void saveGame(int sc, int tm, int is_save_only){
             } else if(column == 3){
                 //TIME TAKEN
                 if(isFound == 1 && isCreated == 0){
-                    int val = user_time;
-                    if (sc > user_score_highest){
+                    int val = user.time;
+                    if (sc > user.score_highest){
                         val = tm;
                     }
                     char buff[10];
@@ -761,7 +753,7 @@ void saveGame(int sc, int tm, int is_save_only){
                 if(isFound == 1 && isCreated == 0){
                     int val = 0;
                     if (is_save_only){
-                        val = user_score[cells_size - 1];
+                        val = user.score[cells_size - 1];
                     }
                     char buff[10];
                     sprintf(buff, "%d", val);
@@ -866,24 +858,24 @@ void saveGame(int sc, int tm, int is_save_only){
 		printf("\n\n =============== ADDED! ===============");
 
 		//USERNAME
-		for(int i = 0; i < user_name_count; i++){
-            teks[count] = user_name[i];
+		for(int i = 0; i < user.name_count; i++){
+            teks[count] = user.name[i];
             count++;
         }
         teks[count] = ',';
         count++;
 
 		//LAST ATTEMPT
-        for(int i = 0; i < user_time_stamp_count; i++){
-            teks[count] = user_time_stamp[i];
+        for(int i = 0; i < user.time_stamp_count; i++){
+            teks[count] = user.time_stamp[i];
             count++;
         }
         teks[count] = ',';
         count++;
 
         //HIGH SCORE
-        int val = user_score_highest;
-       if (sc > user_score_highest){
+        int val = user.score_highest;
+       if (sc > user.score_highest){
             val = sc;
         }
         char buff[100];
@@ -898,8 +890,8 @@ void saveGame(int sc, int tm, int is_save_only){
         count++;
 
         //TIME
-        val = user_time;
-        if (sc > user_score_highest){
+        val = user.time;
+        if (sc > user.score_highest){
             val = tm;
         }
         sprintf(buff, "%d", val);
@@ -915,7 +907,7 @@ void saveGame(int sc, int tm, int is_save_only){
         //CURRENT SCORE
         val = 0;
         if (is_save_only){
-            val = user_score[cells_size - 1];
+            val = user.score[cells_size - 1];
         }
         sprintf(buff, "%d", val);
         a = getIntLength(val);
@@ -992,7 +984,7 @@ void actionUp(){
                 if (cells[cells_size - 1][z][y] == 0)
                     continue;
                 else if (cells[cells_size - 1][x][y] == cells[cells_size - 1][z][y]){
-                    user_score[cells_size - 1] = user_score[cells_size - 1] + cells[cells_size - 1][x][y];
+                    user.score[cells_size - 1] = user.score[cells_size - 1] + cells[cells_size - 1][x][y];
                     cells[cells_size - 1][x][y] = 2*cells[cells_size - 1][x][y];
                     cells[cells_size - 1][z][y] = 0;
                     is_moved = 1;
@@ -1032,7 +1024,7 @@ void actionDown(){
                 if (cells[cells_size - 1][z][y] == 0)
                     continue;
                 else if (cells[cells_size - 1][z][y] == cells[cells_size - 1][x][y]){
-                    user_score[cells_size - 1] = user_score[cells_size - 1] + cells[cells_size - 1][x][y];
+                    user.score[cells_size - 1] = user.score[cells_size - 1] + cells[cells_size - 1][x][y];
                     cells[cells_size - 1][x][y] = 2*cells[cells_size - 1][x][y];
                     cells[cells_size - 1][z][y] = 0;
                     is_moved = 1;
@@ -1072,7 +1064,7 @@ void actionLeft(){
                 if (cells[cells_size - 1][x][z] == 0)
                     continue;
                 else if (cells[cells_size - 1][x][z] == cells[cells_size - 1][x][y]){
-                    user_score[cells_size - 1] = user_score[cells_size - 1] + cells[cells_size - 1][x][y];
+                    user.score[cells_size - 1] = user.score[cells_size - 1] + cells[cells_size - 1][x][y];
                     cells[cells_size - 1][x][y] = 2*cells[cells_size - 1][x][y];
                     cells[cells_size - 1][x][z] = 0;
                     is_moved = 1;
@@ -1112,7 +1104,7 @@ void actionRight(){
                 if (cells[cells_size - 1][x][z] == 0)
                     continue;
                 else if (cells[cells_size - 1][x][z] == cells[cells_size - 1][x][y]){
-                    user_score[cells_size - 1] = user_score[cells_size - 1] + cells[cells_size - 1][x][y];
+                    user.score[cells_size - 1] = user.score[cells_size - 1] + cells[cells_size - 1][x][y];
                     cells[cells_size - 1][x][y] = 2*cells[cells_size - 1][x][y];
                     cells[cells_size - 1][x][z] = 0;
                     is_moved = 1;
@@ -1149,7 +1141,7 @@ void printMenu(int i){
 
     if (i == 0)
         printf(ANSI_COLOR_GREEN);
-    if (user_time == 0)
+    if (user.time == 0)
         printBorder("START NEW GAME", 14, 0);
     else
         printBorder("RESUME", 6, 0);
@@ -1189,7 +1181,7 @@ void printCells(){
 
     gotoxy(0, 7);
     char buffer[50];
-    sprintf(buffer, "UNDO : %d | SCORE : %d | TIME : %02d:%02d", undo_available, user_score[cells_size - 1], (clock() - clock_game_start)/60000, (clock() - clock_game_start)/1000 % 60);
+    sprintf(buffer, "UNDO : %d | SCORE : %d | TIME : %02d:%02d", undo_available, user.score[cells_size - 1], (clock() - clock_game_start)/60000, (clock() - clock_game_start)/1000 % 60);
     printCenter(buffer, 8 + 11 + 7 + 10 + 5);
 
     int x, y;
@@ -1268,7 +1260,7 @@ void printCells(){
         }
 
         //hitung nilai akhir
-        saveGame(user_score[cells_size - 1], (clock() - clock_game_start)/1000, 0);
+        saveGame(user.score[cells_size - 1], (clock() - clock_game_start)/1000, 0);
         loadGame();
         MenuGameActivity(0);
     }
@@ -1400,7 +1392,7 @@ void copyCells(int a, int b){
 }
 
 void copyScore(int a, int b){
-    user_score[a] = user_score[b];
+    user.score[a] = user.score[b];
 }
 
 
