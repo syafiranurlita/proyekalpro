@@ -19,6 +19,26 @@ Pada komputer, cukup  gunakan 4 panah keyboard ( atas, bawah, kiri, kanan).
   Apabila kita save program , dan keluar game, lalu kita masuk game lg dan memasukkan username maka kita akan resume atau balik ke game kita dengan time yang sudah tercatat dan score serta state kita terakhir kita bermain. Data pemain dan waktu serta time dan state akan ada pada file excel.
 
 
-                                              Cara Bermain Game 
+                                              Interface Game
                                               
-   
+Tampilan interface kan berisi pilihan
+1) Start New Game 
+2)High Scores
+3)Help
+4)About
+5) Exit 
+
+
+                                            Kelebihan Game
+                                            
+1) memiliki kemampuan untuk save dan resume game . Game dapat meng save state, time, dan score sementara.
+2) Memiliki kemampuan untuk save data pemain atau bisa disebut memory pada excel atau notepad pada komputer.
+
+                                        Aplikasi penggunaan materi Algoritma dan Pemograman
+                                        
+1) Array
+2)Passing Array
+3) Modular
+4) Struct 
+                                              
+
